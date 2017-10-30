@@ -19,6 +19,8 @@ void PrintInfo();
 void PlayGame();
 FText GetValidGuess();
 bool AskToPlayAgain();
+void PrintGameSummary();
+
 
 FBullCowGame BCGame; //instantiate a new game
 // the entry point for our application
@@ -40,18 +42,18 @@ void PlayGame() {
 	BCGame.Reset();
 	
 	int MaxTries = BCGame.GetMaxTries();
-	// loop for the number of turns asking for guesses
-	// TODO change from FOR	to WHILE loop once we are validating tries
-	for (int count = 1; count <= MaxTries; count++) {
+	// loop asking for the number of turns asking for guesses
+	while(!BCGame.IsGameWon() && BCGame.GetCurrentTry() <= MaxTries) {
 		FText Guess = GetValidGuess(); 
-		
+				
 		//  Submit valid guess to the game
 		FBullCowCount BullCowCount = BCGame.SubmitValidGuess(Guess);
-		std::cout << "Bulls :" << BullCowCount.Bulls;
-		std::cout << ". Cows :" << BullCowCount.Cows << "\n\n";
+		std::cout << "Bulls = " << BullCowCount.Bulls;
+		std::cout << ". Cows = " << BullCowCount.Cows << "\n\n";
 	}
+	
+	PrintGameSummary();
 
-	// TODO summarise game 
 }
 
 
@@ -70,7 +72,7 @@ FText GetValidGuess() {
 	do {
 		// get a guess from the player
 		int CurrentTry = BCGame.GetCurrentTry();
-		std::cout << "Try " << CurrentTry << ". Enter your guess: ";
+		std::cout << "Try " << CurrentTry << " of " << BCGame.GetMaxTries() << " . Enter your guess: ";
 		std::getline(std::cin, Guess);
 		// check status and give feedback
 		Status = BCGame.CheckGuessValidity(Guess);
@@ -99,5 +101,13 @@ bool AskToPlayAgain() {
 	FText Response = "";
 	std::getline(std::cin, Response);
 	return (Response[0] == 'y') || (Response[0] == 'Y');
+}
+
+void PrintGameSummary() {
+	if (BCGame.IsGameWon()) {
+		std::cout << "WELL DONE - YOU WIN!" << std::endl;
+	} else {
+		std::cout << "Better luck next time! \n";
+	}
 }
 

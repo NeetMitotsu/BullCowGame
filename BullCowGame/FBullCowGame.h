@@ -21,19 +21,24 @@ class FBullCowGame {
 public:
 	FBullCowGame();
 
-	int32 GetMaxTries() const;
 	int32 GetCurrentTry() const;
 	int32 GetHiddenWordLength() const;
 	bool IsGameWon() const;
-	EGuessStatus CheckGuessValidity(FString Guess) const;
+	EGuessStatus CheckGuessValidity(FString) const; 
 
-	void Reset(); // TODO make a more rich return value;
+	void Reset();
+
+	int32 GetMaxTries() const;
+
 	// count bulls & cows, and increasing try # assuming valid guess
 	FBullCowCount SubmitValidGuess(FString);
 
 // ^^ Please try and ignore this and focus on the interface aboce ^^
 private:
 	int32 MyCurrentTry;
-	int32 MyMaxTries;
 	FString MyHiddenWord;
+	bool bGameIsWon;
+
+	bool IsIsogram(FString) const;
+	bool IsLowercase(FString) const;
 };
