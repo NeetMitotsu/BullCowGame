@@ -1,10 +1,8 @@
 /* This is the console executable, that makes use of the BUllCow class.
 This acts as the view in a MVC pattern, and is responsible for all
 user interaction. for game logic see the FBullCowGame class.
-
-
-
 */
+#pragma once
 #include "stdafx.h"
 #include <iostream>
 #include <string>
@@ -32,9 +30,7 @@ int main() {
 		// TODO add a game summary
 		bPlayAgain = AskToPlayAgain();
 	} while (bPlayAgain);
-
 	// repeat the guess back to them 
-
 	return 0;
 }
 
